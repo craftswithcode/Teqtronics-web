@@ -23,3 +23,27 @@
     font-style: normal;
     color: #e5222f
 }
+
+.home .heroTypewriter {
+    display: inline-block;
+    width: 13ch;
+    white-space: nowrap;
+    text-align: center
+}
+
+.home .heroTypewriter.isTyping::after {
+    content: "";
+    display: inline-block;
+    width: .055em;
+    height: .85em;
+    margin-left: .08em;
+    vertical-align: -.05em;
+    background: currentColor;
+    animation: heroTypewriterCaret .72s steps(2, start) infinite
+}
+
+@keyframes heroTypewriterCaret {
+    to {
+        visibility: hidden
+    }
+}

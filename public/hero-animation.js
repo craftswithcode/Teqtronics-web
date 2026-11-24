@@ -2,8 +2,22 @@
   const left=document.getElementById('heroLeft'),right=document.getElementById('heroRight'),seam=document.getElementById('heroSeam'),canvas=document.getElementById('heroFx'),brain=document.querySelector('.home .brain');
   if(!left||!right||!seam||!canvas||!brain)return;
   const ctx=canvas.getContext('2d'),W=840,H=605;
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const reveal=()=>document.querySelectorAll('.heroReveal').forEach((el,i)=>setTimeout(()=>el.classList.add('show'),i*260));
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,typewriter=document.querySelector('.heroTypewriter');
+  let typewriterStarted=false;
+  const startTypewriter=()=>{
+    if(!typewriter||typewriterStarted||reduce)return;
+    typewriterStarted=true;
+    const text=typewriter.textContent;
+    typewriter.textContent='';
+    typewriter.classList.add('isTyping');
+    let index=0;
+    const typeNext=()=>{
+      if(index<text.length){typewriter.textContent=text.slice(0,++index);setTimeout(typeNext,78)}
+      else setTimeout(()=>typewriter.classList.remove('isTyping'),500);
+    };
+    typeNext()
+  };
+  const reveal=()=>document.querySelectorAll('.heroReveal').forEach((el,i)=>setTimeout(()=>{el.classList.add('show');if(el.matches('.hero h1'))startTypewriter()},i*260));
   if(reduce||!ctx){left.style.opacity=right.style.opacity='1';seam.style.opacity='.55';reveal();return}
   const ease=x=>1-Math.pow(1-Math.max(0,Math.min(1,x)),3);
   const bits=Array.from({length:82},()=>({x:170+Math.random()*500,y:60+Math.random()*470,p:Math.random()*6.28,v:.7+Math.random()*1.8,ch:Math.random()<.5?'0':'1'}));
