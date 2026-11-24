@@ -1,0 +1,56 @@
+const stickyHeader=document.querySelector('.mainHeader');
+const heroSection=document.querySelector('.home .hero');
+if(stickyHeader&&heroSection){const updateHeader=()=>stickyHeader.classList.toggle('scrolled',window.scrollY>heroSection.offsetHeight-95);window.addEventListener('scroll',updateHeader,{passive:true});updateHeader()}
+const currentPath=location.pathname.split('/').pop()||'index.html';
+document.querySelectorAll('.mainHeader nav a').forEach(link=>{if(link.getAttribute('href')===currentPath)link.classList.add('isCurrent')});
+const projectTrack=document.querySelector('#projectTrack');
+if(projectTrack){document.querySelector('.projectPrev')?.addEventListener('click',()=>projectTrack.scrollBy({left:-projectTrack.clientWidth*.82,behavior:'smooth'}));document.querySelector('.projectNext')?.addEventListener('click',()=>projectTrack.scrollBy({left:projectTrack.clientWidth*.82,behavior:'smooth'}))}
+
+function addHoneypot(form){if(form.querySelector('[name="website"]'))return;const wrap=document.createElement('div');wrap.className='formHoneypot';wrap.setAttribute('aria-hidden','true');wrap.innerHTML='<label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label>';form.append(wrap)}
+function formPayload(form){const data=Object.fromEntries(new FormData(form).entries());let service=data.service||data.subject||data.course||data.area||'General inquiry';let message=data.message||data.goals||data.learningGoals||'';
+ if(form.classList.contains('corporateForm')){service='Corporate training';message=[`Organization: ${data.organization||''}`,`Team size: ${data.teamSize||''}`,`Learning goals: ${data.learningGoals||''}`].join('\n')}
+ if(form.closest('.sitePage')&&location.pathname.endsWith('enroll.html')){service=`Enrollment: ${data.course||'Course advice'}`;message=[`City: ${data.city||''}`,`Background: ${data.background||''}`,`Schedule: ${data.schedule||''}`,data.message||''].join('\n')}
+ if(location.pathname.endsWith('careers.html')){service=`Careers: ${data.area||'General interest'}`;message=[`Portfolio: ${data.portfolio||''}`,data.message||''].join('\n')}
+ return {name:data.name||'',email:data.email||'',phone:data.phone||'',service,message,website:data.website||''}}
+document.querySelectorAll('form').forEach(form=>{addHoneypot(form);form.addEventListener('submit',async event=>{event.preventDefault();const button=form.querySelector('[type="submit"],button:not([type])');const notice=form.querySelector('.notice');if(!notice)return;notice.hidden=false;notice.textContent='Sending your inquiry…';if(button){button.disabled=true;button.dataset.label=button.textContent;button.textContent='SENDING…'}try{const response=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(formPayload(form))});const result=await response.json();if(!response.ok)throw new Error(result.error||'Please check your details and try again.');notice.textContent='Thank you. Your inquiry has been received. We’ll be in touch soon.';notice.dataset.state='success';form.reset()}catch(error){notice.textContent=error.message==='Failed to fetch'?'Could not connect. Please try again in a moment.':error.message;notice.dataset.state='error'}finally{if(button){button.disabled=false;button.textContent=button.dataset.label||'SUBMIT INQUIRY'}}})});
+
+const themeToggle=document.querySelector('#themeToggle');
+if(themeToggle){const storedTheme=localStorage.getItem('teqtronics-theme');const setTheme=dark=>{document.body.classList.toggle('dark-mode',dark);themeToggle.setAttribute('aria-pressed',String(dark));themeToggle.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');themeToggle.querySelector('.themeIcon').textContent=dark?'☀':'☾';};setTheme(storedTheme==='dark');themeToggle.addEventListener('click',()=>{const dark=!document.body.classList.contains('dark-mode');setTheme(dark);localStorage.setItem('teqtronics-theme',dark?'dark':'light')});}
+
+
+if(themeToggle&&document.body.classList.contains('home'))document.body.appendChild(themeToggle);
+
+const serviceInquiryDialog=document.querySelector('#serviceInquiryDialog');
+if(serviceInquiryDialog){const serviceField=serviceInquiryDialog.querySelector('[name="service"]');const inquiryCards=document.querySelectorAll('.serviceVisualCard,.portfolioCard');const openInquiry=card=>{const title=card.querySelector('h3')?.textContent?.trim()||card.querySelector('.serviceVisualPhoto span')?.textContent?.trim()||'IT Services';const isProject=card.classList.contains('portfolioCard');serviceField.value=isProject?`Portfolio project: ${title}`:title;serviceInquiryDialog.querySelector('#serviceInquiryTitle').textContent=`Ask about ${title}`;serviceInquiryDialog.showModal();serviceInquiryDialog.querySelector('[name="name"]').focus()};inquiryCards.forEach(card=>{const title=card.querySelector('h3')?.textContent?.trim()||'this item';card.setAttribute('role','button');card.setAttribute('tabindex','0');card.setAttribute('aria-label',`Ask about ${title}`);card.addEventListener('click',()=>openInquiry(card));card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openInquiry(card)}})});serviceInquiryDialog.querySelector('.serviceDialogClose').addEventListener('click',()=>serviceInquiryDialog.close());serviceInquiryDialog.addEventListener('click',event=>{if(event.target===serviceInquiryDialog)serviceInquiryDialog.close()});serviceInquiryDialog.addEventListener('close',()=>{serviceInquiryDialog.querySelector('.notice').hidden=true})}
+
+const teamProfiles={
+ development:[
+  {name:'Rana Abdul Rehman',role:'Senior Full Stack Developer',education:'Graduate — Software Engineering',bio:'Leads full stack development and supports practical software project work.'},
+  {name:'Reeba Rasheed',role:'Senior ML Developer',education:'Graduate in Computer Science',bio:'Works on machine learning development and applied AI projects.'},
+  {name:'Muhammad Fahad Javed',role:'Junior Web Developer · MERN Stack',education:'Veterinary Doctor',bio:'Builds web applications using the MERN stack.'},
+  {name:'Usman Tahir',role:'Junior Web Developer',education:'FSc Pre-Medical',bio:'Supports web development projects and implementation.'},
+  {name:'Muhammad Hamza',role:'Junior Web Developer · TypeScript',education:'Matric',bio:'Works on TypeScript based web development.'}
+ ],
+ network:[{name:'Taimoor Babar',role:'Local Business Market Expert',education:'',bio:'Supports local business market understanding and relationship development.'}],
+ marketing:[
+  {name:'Mahin Tanveer',role:'SEO & Digital Marketing Expert',education:'Graduate in HND',bio:'Works across search optimization and digital marketing.'},
+  {name:'Rutaba Waseem',role:'Graphic Designer',education:'BS Computer Science',bio:'Creates visual design assets for digital communication.'},
+  {name:'Fatima Nadeem',role:'Digital Marketing Expert',education:'FSc Pre-Medical · B-Form',bio:'Supports digital marketing planning and campaign work.'},
+  {name:'Ayesha Arshad',role:'Social Media Expert',education:'BS Software Engineering',bio:'Supports social media planning and content publishing.'}
+ ], agents:[
+  {name:'Sir Zain ul Abideen',role:'CEO · Senior AI Agents',education:'Leadership & AI Agents',bio:'Leads AI agents work and guides the team with senior technical and business direction.'},
+  {name:'Amna Rehman',role:'AI Agents',education:'BS Software Engineering',bio:'Works on AI agents and applied software solutions.'}
+ ],
+ mentorship:[
+  {name:'Sir Zain ul Abideen',role:'CEO · Senior AI Agents',education:'Leadership & FYP Mentorship',bio:'Guides students and teams with professional mentorship and AI agents leadership.'},
+  {name:'Amna Rehman',role:'AI Agents',education:'BS Software Engineering',bio:'Mentors learners in AI agents and applied technology projects.'},
+  {name:'Rana Abdul Rehman',role:'Senior Full Stack Mentor',education:'Graduate — Software Engineering',bio:'Provides software development guidance for student and team projects.'},
+  {name:'Fatima Nadeem',role:'Digital Marketing Mentor',education:'FSc Pre-Medical · B-Form',bio:'Supports learners with practical digital marketing guidance.'}
+ ]
+};
+const teamDialog=document.querySelector('#teamDialog');if(teamDialog){const grid=teamDialog.querySelector('#teamProfileGrid');const closeTeam=()=>teamDialog.close();document.querySelectorAll('.teamCategory').forEach(card=>card.addEventListener('click',()=>{const key=card.dataset.team;const profiles=teamProfiles[key]||[];teamDialog.querySelector('#teamDialogTitle').textContent=card.querySelector('h3').textContent;grid.innerHTML=profiles.map(person=>{const initials=person.name.split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join('').toUpperCase();return `<article class="teamProfile"><div class="profileAvatar">${initials}</div><div><h3>${person.name}</h3><strong>${person.role}</strong>${person.education?`<p class="profileEducation">${person.education}</p>`:''}<p>${person.bio}</p></div></article>`}).join('');teamDialog.showModal()}));teamDialog.querySelector('.teamDialogClose').addEventListener('click',closeTeam);teamDialog.addEventListener('click',event=>{if(event.target===teamDialog)closeTeam()})}
+
+
+
+
+

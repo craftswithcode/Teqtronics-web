@@ -1,0 +1,3 @@
+.brand.logoBrand{display:flex;align-items:center;width:232px;max-width:100%;flex:0 1 232px;gap:0}.logoBrand img{display:block;width:100%;height:auto}.logoBrand .logoDark{display:none}.home .mainHeader .logoLight{display:none}.home .mainHeader .logoDark{display:block}.home .mainHeader.scrolled .logoLight{display:block}.home .mainHeader.scrolled .logoDark{display:none}.siteFooter .logoLight,.contactPage+footer .logoLight{display:none}.siteFooter .logoDark,.contactPage+footer .logoDark{display:block}
+@media(max-width:900px){.brand.logoBrand{width:205px;flex-basis:205px}}
+@media(max-width:650px){.brand.logoBrand{width:170px;flex-basis:170px}}

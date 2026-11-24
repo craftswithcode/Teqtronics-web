@@ -1,0 +1,25 @@
+.home .heroTag {
+    font: 700 clamp(16px, 2.1vw, 26px) 'DM Sans', sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
+    color: #fff;
+    margin-top: -5px
+}
+
+.home .heroTag .human {
+    color: #e5222f
+}
+
+.home .heroTag b {
+    color: #fff;
+    padding: 0 8px
+}
+
+.home .heroTag .ai {
+    color: #fff
+}
+
+.home .hero h1 em {
+    font-style: normal;
+    color: #e5222f
+}

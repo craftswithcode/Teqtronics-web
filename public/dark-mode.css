@@ -1,0 +1,30 @@
+.themeToggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 13px;border:1px solid #ffffff45;border-radius:999px;background:#ffffff10;color:#fff;font:700 10px 'DM Sans',sans-serif;letter-spacing:.04em;white-space:nowrap;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.themeToggle:hover{background:#ffffff20;border-color:#ffffff80;transform:translateY(-1px)}
+.themeToggle .themeIcon{font-size:16px;line-height:1}
+.home.dark-mode{background:#111;color:#f5f2ed}
+.home.dark-mode .homeServices,.home.dark-mode .partnerSection,.home.dark-mode .leadership,.home.dark-mode .teamSection,.home.dark-mode .projectsSection{background:#191817!important;color:#f5f2ed}
+.home.dark-mode .partnerInner h2,.home.dark-mode .leadershipHeading h2,.home.dark-mode .teamInner>h2,.home.dark-mode .projectsHeading h2,.home.dark-mode .homeServices h2{color:#f5f2ed}
+.home.dark-mode .partnerLogo,.home.dark-mode .serviceVisualCard,.home.dark-mode .teamMember,.home.dark-mode .projectCard,.home.dark-mode .missionCard{background:#22211f!important;border-color:#393633;color:#f5f2ed}
+.home.dark-mode .serviceVisualBody h3,.home.dark-mode .projectInfo h3,.home.dark-mode .teamMember h3,.home.dark-mode .missionCard h3{color:#f5f2ed}
+.home.dark-mode .serviceVisualBody p,.home.dark-mode .projectInfo p,.home.dark-mode .teamMember p,.home.dark-mode .sectionIntro,.home.dark-mode .projectsHeading>p{color:#c5c0b9}
+.home.dark-mode .homeCta{background:#090909!important}
+.home.dark-mode .themeToggle{background:#e5222f;border-color:#e5222f}
+@media(max-width:900px){.themeToggle{min-height:38px;padding:0 10px;font-size:9px}}
+@media(max-width:600px){.themeToggle{min-height:36px;padding:0 9px;gap:5px}.themeToggle .themeLabel{font-size:8px}}
+
+.themeToggle{width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;flex:0 0 44px;font-size:20px}.themeToggle .themeIcon{font-size:20px}.themeToggle .themeLabel{display:none}@media(max-width:900px){.themeToggle{width:40px;height:40px;min-height:40px;flex-basis:40px}}@media(max-width:600px){.themeToggle{width:36px;height:36px;min-height:36px;flex-basis:36px}}
+
+.themeToggle{position:fixed;top:50%;right:16px;z-index:1200;transform:translateY(-50%);box-shadow:0 8px 22px #1114}.themeToggle:hover{transform:translateY(calc(-50% - 2px))}@media(max-width:600px){.themeToggle{right:10px}}
+
+.themeToggle{position:fixed!important;top:50%!important;right:16px!important;z-index:1200!important;transform:translateY(-50%)}.themeToggle .themeIcon{color:#ffd84d;text-shadow:0 0 6px #ffd84d,0 0 14px #ffbf2f,0 0 22px #ffb300}.home.dark-mode .themeToggle .themeIcon{color:#fff1a8;text-shadow:0 0 7px #ffe45e,0 0 16px #ffbf2f}@media(max-width:600px){.themeToggle{right:10px!important}}@media(prefers-reduced-motion:no-preference){.themeToggle .themeIcon{animation:moonGlow 2.2s ease-in-out infinite alternate}}@keyframes moonGlow{from{filter:brightness(.92)}to{filter:brightness(1.3)}}@media(prefers-reduced-motion:reduce){.themeToggle .themeIcon{animation:none}}
+
+/* Dark theme on the remaining pages */
+body.dark-mode:not(.home){background:#111;color:#f4f1eb}
+body.dark-mode:not(.home) main,body.dark-mode:not(.home) .sitePage{background:#111;color:#f4f1eb}
+body.dark-mode:not(.home) main>section{background:#191817!important;color:#f4f1eb}
+body.dark-mode:not(.home) .pageHero,body.dark-mode:not(.home) .contactIntro{background:#191817!important;color:#f4f1eb}
+body.dark-mode:not(.home) h1,body.dark-mode:not(.home) h2,body.dark-mode:not(.home) h3{color:#f5f2ed}
+body.dark-mode:not(.home) p,body.dark-mode:not(.home) .pageCard p{color:#c7c1b9}
+body.dark-mode:not(.home) .pageCard,body.dark-mode:not(.home) .careerPanel,body.dark-mode:not(.home) .contactFormCard,body.dark-mode:not(.home) .corporateForm,body.dark-mode:not(.home) .serviceVisualCard,body.dark-mode:not(.home) .projectCard{background:#242220!important;border-color:#3a3632;color:#f5f2ed}
+body.dark-mode:not(.home) input,body.dark-mode:not(.home) select,body.dark-mode:not(.home) textarea{background:#191817;color:#fff;border-color:#514b45}
+body.dark-mode:not(.home) footer{background:#090909;color:#f5f2ed}
