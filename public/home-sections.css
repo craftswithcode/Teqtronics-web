@@ -84,3 +84,15 @@ dialog.teamDialog[open]{display:flex!important;flex-direction:column;overflow:hi
 @media(max-width:900px){.teamCategoryGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:560px){.teamCategoryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:380px){.teamCategoryGrid{grid-template-columns:minmax(0,1fr)}}
+
+.homeStats{padding:54px 28px!important;background:linear-gradient(120deg,#191817,#292522);color:#f7f4ef;border-block:1px solid #3b332f}
+.homeStatsInner{width:min(1160px,100%);margin:0 auto}
+.homeStatsHeading{text-align:center;margin:0 0 30px}
+.homeStatsHeading h2{font:700 clamp(27px,3.8vw,38px)/1.15 Manrope,sans-serif;letter-spacing:-.04em;margin:10px 0 0}
+.homeStatsHeading h2 em{font-style:normal;color:#ed3942}
+.homeStatsGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.homeStat{display:grid;justify-items:center;gap:8px;padding:20px 10px;border:1px solid #ffffff20;border-radius:14px;background:#ffffff08;text-align:center}
+.homeStatNumber{font:800 clamp(34px,5vw,52px)/1 Manrope,sans-serif;color:#f0444d;font-variant-numeric:tabular-nums}
+.homeStatLabel{font:600 12px/1.5 'DM Sans',sans-serif;color:#e1ddd8}
+@media(max-width:650px){.homeStats{padding:42px 18px!important}.homeStatsGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.homeStat{padding:18px 8px}.homeStatNumber{font-size:clamp(32px,9vw,44px)}.homeStatLabel{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.homeStatNumber{font-variant-numeric:tabular-nums}}
