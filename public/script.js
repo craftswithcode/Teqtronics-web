@@ -7,7 +7,7 @@ const projectTrack=document.querySelector('#projectTrack');
 if(projectTrack){
  const projectCards=projectTrack.querySelectorAll('.projectCard');
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
- let autoScrollTimer=null,resumeTimer=null,animationFrame=null,hovered=false,focused=false,visible=true;
+ let autoScrollTimer=null,resumeTimer=null,animationFrame=null,focused=false,visible=true;
  const stopAutoScroll=()=>{clearInterval(autoScrollTimer);autoScrollTimer=null};
  const cancelProjectAnimation=()=>{if(animationFrame!==null){cancelAnimationFrame(animationFrame);animationFrame=null}};
  const moveProjects=direction=>{
@@ -20,14 +20,14 @@ if(projectTrack){
   const target=direction>0?(atEnd?0:Math.min(projectTrack.scrollLeft+step,maxScroll)):(atStart?maxScroll:Math.max(projectTrack.scrollLeft-step,0));
   cancelProjectAnimation();
   if(reducedMotion){projectTrack.scrollLeft=target;return}
-  const start=projectTrack.scrollLeft,startedAt=performance.now(),duration=500;
+  const start=projectTrack.scrollLeft,startedAt=performance.now(),duration=300;
   const animate=now=>{const progress=Math.min((now-startedAt)/duration,1),eased=1-Math.pow(1-progress,3);projectTrack.scrollLeft=start+(target-start)*eased;if(progress<1)animationFrame=requestAnimationFrame(animate);else animationFrame=null};
   animationFrame=requestAnimationFrame(animate)
  };
  const startAutoScroll=()=>{
   stopAutoScroll();
-  if(reducedMotion||!visible||document.hidden||hovered||focused)return;
-  autoScrollTimer=setInterval(()=>moveProjects(1),3500)
+  if(reducedMotion||!visible||document.hidden||focused)return;
+  autoScrollTimer=setInterval(()=>moveProjects(1),3000)
  };
  const pauseForInteraction=()=>{
   stopAutoScroll();
@@ -41,8 +41,6 @@ if(projectTrack){
    moveProjects(event.key==='ArrowRight'?1:-1)
   }
  });
- projectTrack.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'){hovered=true;stopAutoScroll();cancelProjectAnimation()}});
- projectTrack.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'){hovered=false;startAutoScroll()}});
  projectTrack.addEventListener('focusin',()=>{focused=true;stopAutoScroll();cancelProjectAnimation()});
  projectTrack.addEventListener('focusout',event=>{if(!projectTrack.contains(event.relatedTarget)){focused=false;startAutoScroll()}});
  projectTrack.addEventListener('wheel',pauseForInteraction,{passive:true});
