@@ -111,11 +111,11 @@ const teamProfiles={
 };
 const teamDialog=document.querySelector('#teamDialog');if(teamDialog){const grid=teamDialog.querySelector('#teamProfileGrid');const closeTeam=()=>teamDialog.close();document.querySelectorAll('.teamCategory').forEach(card=>card.addEventListener('click',()=>{const key=card.dataset.team;const profiles=teamProfiles[key]||[];teamDialog.querySelector('#teamDialogTitle').textContent=card.querySelector('h3').textContent;grid.innerHTML=profiles.map(person=>{const initials=person.name.split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join('').toUpperCase();return `<article class="teamProfile"><div class="profileAvatar">${initials}</div><div><h3>${person.name}</h3><strong>${person.role}</strong>${person.education?`<p class="profileEducation">${person.education}</p>`:''}<p>${person.bio}</p></div></article>`}).join('');teamDialog.showModal()}));teamDialog.querySelector('.teamDialogClose').addEventListener('click',closeTeam);teamDialog.addEventListener('click',event=>{if(event.target===teamDialog)closeTeam()})}
 
-const homeStats={completedProjects:56,totalProjects:67,currentProjects:39,fypClients:17};
+const homeStats={projectsDelivered:{value:50,suffix:'+'},ourPartners:{value:10,suffix:'+'},services:{value:16,suffix:'+'},clientRetention:{value:95,suffix:'%'}};
 const homeStatsSection=document.querySelector('.homeStats');
 if(homeStatsSection){
  const counters=homeStatsSection.querySelectorAll('[data-stat]');
- const renderCounts=progress=>counters.forEach(counter=>{const target=homeStats[counter.dataset.stat];counter.textContent=new Intl.NumberFormat().format(Math.round(target*progress))});
+ const renderCounts=progress=>counters.forEach(counter=>{const stat=homeStats[counter.dataset.stat];counter.textContent=`${new Intl.NumberFormat().format(Math.round(stat.value*progress))}${stat.suffix}`});
  const animateCounts=()=>{
   const startedAt=performance.now();
   const frame=now=>{const progress=Math.min((now-startedAt)/1400,1);renderCounts(1-Math.pow(1-progress,3));if(progress<1)requestAnimationFrame(frame)};
