@@ -8,6 +8,11 @@
 .projectsGrid{display:flex;gap:17px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:auto;scrollbar-width:none;padding:2px 2px 14px}
 .projectsGrid::-webkit-scrollbar{display:none}
 .projectsGrid .projectCard{flex:0 0 calc((100% - 51px)/4);scroll-snap-align:start}
+.projectsGrid .projectCard.isSequenceSecond{border-color:#df202b;box-shadow:0 10px 24px #df202b22}
+.projectsGrid .projectCard.isSequenceSecond .projectInfo h3{font-weight:800}
+.projectsGrid .projectCard.isSequenceSecond:hover{transform:translateY(-5px) scale(1.025);box-shadow:0 15px 30px #df202b30}
+.home.dark-mode .projectsGrid .projectCard.isSequenceSecond,body.dark-mode .projectsGrid .projectCard.isSequenceSecond{border-color:#df202b!important;box-shadow:0 10px 24px #df202b44!important}
+.home.dark-mode .projectsGrid .projectCard.isSequenceSecond:hover,body.dark-mode .projectsGrid .projectCard.isSequenceSecond:hover{transform:translateY(-5px) scale(1.025);box-shadow:0 15px 30px #df202b66!important}
 .projectFive{background-image:url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80')}
 .projectSix{background-image:url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=700&q=80')}
 .projectSeven{background-image:url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=700&q=80')}

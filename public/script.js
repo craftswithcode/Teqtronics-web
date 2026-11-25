@@ -7,9 +7,17 @@ const projectTrack=document.querySelector('#projectTrack');
 if(projectTrack){
  const projectCards=projectTrack.querySelectorAll('.projectCard');
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
- let autoScrollTimer=null,resumeTimer=null,animationFrame=null,focused=false,visible=true;
+ let autoScrollTimer=null,resumeTimer=null,selectionTimer=null,animationFrame=null,focused=false,visible=true;
  const stopAutoScroll=()=>{clearInterval(autoScrollTimer);autoScrollTimer=null};
  const cancelProjectAnimation=()=>{if(animationFrame!==null){cancelAnimationFrame(animationFrame);animationFrame=null}};
+ const updateSequenceHighlight=()=>{
+  if(projectCards.length<2)return;
+  const gap=parseFloat(getComputedStyle(projectTrack).gap)||0;
+  const step=projectCards[0].getBoundingClientRect().width+gap;
+  const firstIndex=step?Math.round(projectTrack.scrollLeft/step):0;
+  const secondIndex=(firstIndex+1)%projectCards.length;
+  projectCards.forEach((card,index)=>card.classList.toggle('isSequenceSecond',index===secondIndex))
+ };
  const moveProjects=direction=>{
   if(projectCards.length<2)return;
   const gap=parseFloat(getComputedStyle(projectTrack).gap)||0;
@@ -41,6 +49,12 @@ if(projectTrack){
    moveProjects(event.key==='ArrowRight'?1:-1)
   }
  });
+ projectTrack.addEventListener('scroll',()=>{
+  clearTimeout(selectionTimer);
+  selectionTimer=setTimeout(updateSequenceHighlight,120)
+ },{passive:true});
+ window.addEventListener('resize',updateSequenceHighlight);
+ updateSequenceHighlight();
  projectTrack.addEventListener('focusin',()=>{focused=true;stopAutoScroll();cancelProjectAnimation()});
  projectTrack.addEventListener('focusout',event=>{if(!projectTrack.contains(event.relatedTarget)){focused=false;startAutoScroll()}});
  projectTrack.addEventListener('wheel',pauseForInteraction,{passive:true});
