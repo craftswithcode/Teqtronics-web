@@ -4,7 +4,56 @@ if(stickyHeader&&heroSection){const updateHeader=()=>stickyHeader.classList.togg
 const currentPath=location.pathname.split('/').pop()||'index.html';
 document.querySelectorAll('.mainHeader nav a').forEach(link=>{if(link.getAttribute('href')===currentPath)link.classList.add('isCurrent')});
 const projectTrack=document.querySelector('#projectTrack');
-if(projectTrack){document.querySelector('.projectPrev')?.addEventListener('click',()=>projectTrack.scrollBy({left:-projectTrack.clientWidth*.82,behavior:'smooth'}));document.querySelector('.projectNext')?.addEventListener('click',()=>projectTrack.scrollBy({left:projectTrack.clientWidth*.82,behavior:'smooth'}))}
+if(projectTrack){
+ const projectCards=projectTrack.querySelectorAll('.projectCard');
+ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let autoScrollTimer=null,resumeTimer=null,animationFrame=null,hovered=false,focused=false,visible=true;
+ const stopAutoScroll=()=>{clearInterval(autoScrollTimer);autoScrollTimer=null};
+ const cancelProjectAnimation=()=>{if(animationFrame!==null){cancelAnimationFrame(animationFrame);animationFrame=null}};
+ const moveProjects=direction=>{
+  if(projectCards.length<2)return;
+  const gap=parseFloat(getComputedStyle(projectTrack).gap)||0;
+  const step=projectCards[0].getBoundingClientRect().width+gap;
+  const maxScroll=projectTrack.scrollWidth-projectTrack.clientWidth;
+  if(maxScroll<=0)return;
+  const atStart=projectTrack.scrollLeft<=2,atEnd=projectTrack.scrollLeft>=maxScroll-2;
+  const target=direction>0?(atEnd?0:Math.min(projectTrack.scrollLeft+step,maxScroll)):(atStart?maxScroll:Math.max(projectTrack.scrollLeft-step,0));
+  cancelProjectAnimation();
+  if(reducedMotion){projectTrack.scrollLeft=target;return}
+  const start=projectTrack.scrollLeft,startedAt=performance.now(),duration=500;
+  const animate=now=>{const progress=Math.min((now-startedAt)/duration,1),eased=1-Math.pow(1-progress,3);projectTrack.scrollLeft=start+(target-start)*eased;if(progress<1)animationFrame=requestAnimationFrame(animate);else animationFrame=null};
+  animationFrame=requestAnimationFrame(animate)
+ };
+ const startAutoScroll=()=>{
+  stopAutoScroll();
+  if(reducedMotion||!visible||document.hidden||hovered||focused)return;
+  autoScrollTimer=setInterval(()=>moveProjects(1),3500)
+ };
+ const pauseForInteraction=()=>{
+  stopAutoScroll();
+  cancelProjectAnimation();
+  clearTimeout(resumeTimer);
+  resumeTimer=setTimeout(startAutoScroll,5000)
+ };
+ projectTrack.addEventListener('keydown',event=>{
+  if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
+   event.preventDefault();
+   moveProjects(event.key==='ArrowRight'?1:-1)
+  }
+ });
+ projectTrack.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse'){hovered=true;stopAutoScroll();cancelProjectAnimation()}});
+ projectTrack.addEventListener('pointerleave',event=>{if(event.pointerType==='mouse'){hovered=false;startAutoScroll()}});
+ projectTrack.addEventListener('focusin',()=>{focused=true;stopAutoScroll();cancelProjectAnimation()});
+ projectTrack.addEventListener('focusout',event=>{if(!projectTrack.contains(event.relatedTarget)){focused=false;startAutoScroll()}});
+ projectTrack.addEventListener('wheel',pauseForInteraction,{passive:true});
+ projectTrack.addEventListener('touchstart',pauseForInteraction,{passive:true});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAutoScroll();cancelProjectAnimation()}else startAutoScroll()});
+ if('IntersectionObserver'in window){
+  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)startAutoScroll();else{stopAutoScroll();cancelProjectAnimation()}},{threshold:.1});
+  observer.observe(projectTrack)
+ }
+ startAutoScroll()
+}
 
 function addHoneypot(form){if(form.querySelector('[name="website"]'))return;const wrap=document.createElement('div');wrap.className='formHoneypot';wrap.setAttribute('aria-hidden','true');wrap.innerHTML='<label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label>';form.append(wrap)}
 function formPayload(form){const data=Object.fromEntries(new FormData(form).entries());let service=data.service||data.subject||data.course||data.area||'General inquiry';let message=data.message||data.goals||data.learningGoals||'';

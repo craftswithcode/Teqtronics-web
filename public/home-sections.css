@@ -4,26 +4,17 @@
 @media(max-width:560px){.teamSection,.projectsSection{padding:48px 18px!important}.teamGrid{gap:11px}.teamMember{padding:17px 9px}.teamAvatar{width:68px;height:68px;font-size:18px}.teamMember h3{font-size:13px}.teamMember p{font-size:10px}.projectsGrid{grid-template-columns:1fr}.projectImage{height:190px}.projectsHeading h2{font-size:32px}}
 
 /* Home project categories carousel */
-.projectsHeading{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,380px) auto;align-items:end;gap:24px}
-.projectsGrid{display:flex;gap:17px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:2px 2px 14px}
+.projectsHeading{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,380px);align-items:end;gap:24px}
+.projectsGrid{display:flex;gap:17px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:auto;scrollbar-width:none;padding:2px 2px 14px}
 .projectsGrid::-webkit-scrollbar{display:none}
 .projectsGrid .projectCard{flex:0 0 calc((100% - 51px)/4);scroll-snap-align:start}
-.projectsControls{display:flex;gap:10px;justify-self:end}
-.projectArrow{width:46px;height:46px;border:1px solid #e4dfda;border-radius:50%;background:#fff;color:#1b1b1b;display:grid;place-items:center;font-size:21px;line-height:1;cursor:pointer;box-shadow:0 6px 18px #1414140d;transition:background .2s,color .2s,border-color .2s,transform .2s}
-.projectArrow:hover{background:#df202b;border-color:#df202b;color:#fff;transform:translateY(-2px)}
-.projectArrow:focus-visible{outline:3px solid #df202b;outline-offset:3px}
 .projectFive{background-image:url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80')}
 .projectSix{background-image:url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=700&q=80')}
 .projectSeven{background-image:url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=700&q=80')}
 .projectEight{background-image:url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=700&q=80')}
-@media(max-width:900px){.projectsHeading{grid-template-columns:1fr auto}.projectsHeading>p{grid-column:1;grid-row:2}.projectsControls{grid-column:2;grid-row:1/3}.projectsGrid .projectCard{flex-basis:calc((100% - 17px)/2)}}
-@media(max-width:560px){.projectsHeading{grid-template-columns:1fr auto;gap:14px}.projectsHeading>p{grid-column:1/-1;grid-row:2}.projectsControls{grid-column:2;grid-row:1}.projectArrow{width:40px;height:40px}.projectsGrid .projectCard{flex-basis:86%}}
-
-.projectsSection .projectsControls{display:flex;justify-content:center;justify-self:center;grid-column:auto;grid-row:auto;margin:18px auto 0}
-.projectNext{animation:projectArrowGlow 2s ease-in-out infinite}
-.projectArrow:hover{animation:none;transform:translateY(-2px) scale(1.06)}
-@keyframes projectArrowGlow{0%,100%{box-shadow:0 6px 18px #1414140d}50%{box-shadow:0 0 0 5px #df202b12,0 8px 21px #df202b22}}
-@media(prefers-reduced-motion:reduce){.projectNext{animation:none}}
+@media(max-width:900px){.projectsHeading{grid-template-columns:1fr;gap:12px}.projectsGrid .projectCard{flex-basis:calc((100% - 17px)/2)}}
+@media(max-width:560px){.projectsHeading{gap:14px}.projectsGrid .projectCard{flex-basis:86%}}
+@media(prefers-reduced-motion:reduce){.projectsGrid{scroll-behavior:auto}}
 
 .partnerSection{padding:34px 28px;background:#fff;border-bottom:1px solid #eeece8}.partnerInner{width:min(1160px,100%);margin:auto;display:flex;align-items:center;justify-content:space-between;gap:32px}.partnerInner h2{font:700 clamp(22px,3vw,30px)/1.2 Manrope,sans-serif;margin:8px 0 0;letter-spacing:-.04em}.partnerInner h2 em{font-style:normal;color:#df202b}.partnerLogos{display:flex;align-items:center;gap:20px}.partnerLogo{width:190px;height:105px;display:grid;place-items:center;padding:10px 16px;border:1px solid #eee;border-radius:15px;background:#fff;transition:transform .2s,box-shadow .2s}.partnerLogo:hover{transform:translateY(-3px);box-shadow:0 10px 24px #1112}.partnerLogo img{max-width:100%;max-height:82px;object-fit:contain}@media(max-width:700px){.partnerInner{flex-direction:column;align-items:flex-start}.partnerLogos{width:100%;justify-content:center;flex-wrap:wrap}.partnerLogo{width:min(44%,190px);height:94px}}
 
